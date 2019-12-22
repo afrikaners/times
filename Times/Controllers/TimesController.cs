@@ -34,7 +34,7 @@ namespace Times.Controllers
 
             var railTimes = stops.Trips.Where(x => x.Summary.Mode == "Rail");
 
-            return new TimeResponse
+            return new TimeResponse 
             {
                 Times = railTimes.Select(x => x.Summary.StartTimeOnly).ToList()
             };

@@ -26,7 +26,7 @@ namespace Times.Controllers
         {
             var client = new RestClient("http://au-journeyplanner.silverrailtech.com");
             var awst_now = TimeZoneInfo.ConvertTime(DateTime.Now,
-                 TimeZoneInfo.FindSystemTimeZoneById("India Standard Time")).ToString("yyyy-MM-ddTHH:mm");
+                 TimeZoneInfo.FindSystemTimeZoneById("W. Australia Standard Time")).ToString("yyyy-MM-ddTHH:mm");
             var request = new RestRequest($"/journeyplannerservice/v2/REST/DataSets/PerthRestricted/StopTimetable?ApiKey=40c5877a-7b0f-4045-9544-046d4f348bc2&format=json&StopUid=PerthRestricted%3A133&Time={HttpUtility.UrlEncode(awst_now)}&ReturnNotes=true&IsRealTimeChecked=false", Method.GET);
 
             IRestResponse response = client.Execute(request);

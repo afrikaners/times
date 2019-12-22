@@ -1,7 +1,8 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Times", "Times\Times.csproj", "{FF49B406-ED45-4CE7-850B-6A9BB5870BB5}"
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimesOld", "TimesOld\TimesOld.csproj", "{D00E9422-FC68-445B-B6F6-9EA278FCDF32}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,9 +10,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FF49B406-ED45-4CE7-850B-6A9BB5870BB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FF49B406-ED45-4CE7-850B-6A9BB5870BB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FF49B406-ED45-4CE7-850B-6A9BB5870BB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FF49B406-ED45-4CE7-850B-6A9BB5870BB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D00E9422-FC68-445B-B6F6-9EA278FCDF32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D00E9422-FC68-445B-B6F6-9EA278FCDF32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D00E9422-FC68-445B-B6F6-9EA278FCDF32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D00E9422-FC68-445B-B6F6-9EA278FCDF32}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B9360FE0-7084-4C01-A94C-A24AD1E748A2}
 	EndGlobalSection
 EndGlobal

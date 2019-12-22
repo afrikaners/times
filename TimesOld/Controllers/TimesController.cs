@@ -10,8 +10,8 @@ using RestSharp;
 
 namespace Times.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("[controller]")]
     public class TimesController : ControllerBase
     {
         private readonly ILogger<TimesController> _logger;

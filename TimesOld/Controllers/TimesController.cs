@@ -40,7 +40,7 @@ namespace Times.Controllers
             return new TimeResponse 
             {
 
-                Times = railTimes.Select(x => $"{x.Summary.StartTimeOnly} ({x.Summary.MiutesToDepartLabel} mins)").ToList()
+                Times = railTimes.Select(x => $"{x.Summary.StartTimeOnly} ({x.Summary.MiutesToDepartLabel})").ToList()
             };
         }
     }    public class Summary
@@ -77,7 +77,7 @@ namespace Times.Controllers
                     return "NOW";
                 }
 
-                return MinutesToDepart;
+                return $"{MinutesToDepart} mins";
             }
         }
     }

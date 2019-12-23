@@ -35,9 +35,12 @@ namespace Times.Controllers
 
             var railTimes = stops.Trips.Where(x => x.Summary.Mode == "Rail");
 
+            
+
             return new TimeResponse 
             {
-                Times = railTimes.Select(x => x.Summary.StartTimeOnly).ToList()
+
+                Times = railTimes.Select(x => $"{x.Summary.StartTimeOnly} ({x.Summary.MiutesToDepartLabel} mins)").ToList()
             };
         }
     }    public class Summary
@@ -50,6 +53,29 @@ namespace Times.Controllers
                     return "";
 
                 return TripStartTime.Substring(11, 5);
+            }
+        }
+        public string MinutesToDepart
+        {
+            get
+            {
+                var parsedDate = DateTime.Parse(TripStartTime);
+                var now = DateTime.Now;
+                TimeSpan ts = parsedDate - now;
+                return ((int)Math.Floor(ts.TotalMinutes)).ToString();
+            }
+        }
+
+        public string MiutesToDepartLabel
+        {
+            get
+            {
+                if(MinutesToDepart == "0")
+                {
+                    return "NOW";
+                }
+
+                return MinutesToDepart;
             }
         }
     }

@@ -72,7 +72,7 @@ namespace Times.Controllers
         {
             get
             {
-                if(MinutesToDepart == "0")
+                if(MinutesToDepart == "0" || MinutesToDepart == "-1")
                 {
                     return "NOW";
                 }

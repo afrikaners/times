@@ -60,8 +60,10 @@ namespace Times.Controllers
             get
             {
                 var parsedDate = DateTime.Parse(TripStartTime);
-                var now = DateTime.Now;
-                TimeSpan ts = parsedDate - now;
+                var awst_now = TimeZoneInfo.ConvertTime(DateTime.Now,
+                 TimeZoneInfo.FindSystemTimeZoneById("W. Australia Standard Time"));
+
+                TimeSpan ts = parsedDate - awst_now;
                 return ((int)Math.Floor(ts.TotalMinutes)).ToString();
             }
         }

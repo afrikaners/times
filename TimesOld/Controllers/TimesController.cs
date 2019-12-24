@@ -99,12 +99,20 @@ namespace Times.Controllers
         {
             get
             {
-                var parsedDate = DateTime.Parse(TripStartTime);
-                var awst_now = TimeZoneInfo.ConvertTime(DateTime.Now,
-                 TimeZoneInfo.FindSystemTimeZoneById("W. Australia Standard Time"));
+                try
+                {
+                    var parsedDate = DateTime.Parse(TripStartTime);
+                    var awst_now = TimeZoneInfo.ConvertTime(DateTime.Now,
+                     TimeZoneInfo.FindSystemTimeZoneById("W. Australia Standard Time"));
 
-                TimeSpan ts = parsedDate - awst_now;
-                return ((int)Math.Floor(ts.TotalMinutes)).ToString();
+                    TimeSpan ts = parsedDate - awst_now;
+                    return ((int)Math.Floor(ts.TotalMinutes)).ToString();
+                }
+                catch
+                {
+                    return "-999";
+                }
+
             }
         }
 

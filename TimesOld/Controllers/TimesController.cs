@@ -58,7 +58,10 @@ namespace Times.Controllers
             return Ok(new TimeResponse 
             {
 
-                Times = railTimes.Select(x => $"{x.Summary.StartTimeOnly} ({x.Summary.MiutesToDepartLabel})").ToList()
+                Trips = railTimes.Select(x => new ResponseTrip { 
+                    TimeLabel = $"{x.Summary.StartTimeOnly} ({x.Summary.MiutesToDepartLabel})",
+                    TripSourceId = x.Summary.TripSourceId
+                }).ToList()
             });
         }
 
@@ -74,10 +77,15 @@ namespace Times.Controllers
 
             return "";
         }
+    }    public class ResponseTrip
+    {
+        public string TimeLabel { get; set; }
+        public string TripSourceId { get; set; }
     }    public class Summary
     {
         public string Mode { get; set; }
         public string TripStartTime { get; set; }
+        public string TripSourceId { get; set; }
         public string RouteName { get; set; }
         public string StartTimeOnly { get
             {
@@ -127,7 +135,7 @@ namespace Times.Controllers
 
     public class TimeResponse
     {
-        public List<string> Times { get; set; }
+        public List<ResponseTrip> Trips { get; set; }
     }
 
     public class Destination

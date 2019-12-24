@@ -101,6 +101,13 @@ namespace Times.Controllers
             {
                 try
                 {
+                    var timePart = TripStartTime.Split('T')[1];
+                    var datePart = TripStartTime.Split('T')[0];
+                    if (timePart.StartsWith("24"))
+                    {
+                        var date = DateTime.Parse(datePart).AddDays(1);
+                        TripStartTime = $"{date.ToString("yyyy-MM-dd")}T{timePart.Replace("24:", "00:")}";
+                    }
                     var parsedDate = DateTime.Parse(TripStartTime);
                     var awst_now = TimeZoneInfo.ConvertTime(DateTime.Now,
                      TimeZoneInfo.FindSystemTimeZoneById("W. Australia Standard Time"));

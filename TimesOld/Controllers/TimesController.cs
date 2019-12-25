@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using RestSharp;
+using TimesOld;
 
 namespace Times.Controllers
 {
@@ -15,10 +16,7 @@ namespace Times.Controllers
     public class TimesController : ControllerBase
     {
         private readonly ILogger<TimesController> _logger;
-        private const string _baseUrl = "http://au-journeyplanner.silverrailtech.com";
-        private const string _apiKey = "40c5877a-7b0f-4045-9544-046d4f348bc2";
-        private const string _parameterTemplate = "/journeyplannerservice/v2/REST/DataSets/PerthRestricted/StopTimetable?ApiKey={0}&format=json&StopUid=PerthRestricted%3A{1}&Time={2}&ReturnNotes=false&IsRealTimeChecked=false";
-
+        
         private enum TripCode
         {
             BUTLER = 133,
@@ -37,14 +35,11 @@ namespace Times.Controllers
             {
                 return BadRequest("request is incorrect");
             }
-            var client = new RestClient(_baseUrl);
+            var client = new RestClient(ConstantValues.BaseUrl);
             
             Enum.TryParse(s, out TripCode station);
 
-            var awst_now = TimeZoneInfo.ConvertTime(DateTime.Now,
-                 TimeZoneInfo.FindSystemTimeZoneById("W. Australia Standard Time")).ToString("yyyy-MM-ddTHH:mm");
-            var request = new RestRequest(string.Format(_parameterTemplate,_apiKey, (int)station, HttpUtility.UrlEncode(awst_now)));
-            //var request = new RestRequest($"/journeyplannerservice/v2/REST/DataSets/PerthRestricted/StopTimetable?ApiKey=40c5877a-7b0f-4045-9544-046d4f348bc2&format=json&StopUid=PerthRestricted%3A133&Time={HttpUtility.UrlEncode(awst_now)}&ReturnNotes=false&IsRealTimeChecked=false", Method.GET);
+            var request = new RestRequest(string.Format(ConstantValues.TripsTemplate, ConstantValues.ApiKey, (int)station, HttpUtility.UrlEncode(Helpers.NowAWST.ToString("yyyy-MM-ddTHH:mm"))));
 
             IRestResponse response = client.Execute(request);
             var content = response.Content; // raw content as string
@@ -52,8 +47,6 @@ namespace Times.Controllers
 
             
             var railTimes = stops.Trips.Where(x => x.Summary.Mode == "Rail" && x.Summary.RouteName == "Joondalup Line" && x.Destination.ParentName == getDestination(station));
-
-            
 
             return Ok(new TimeResponse 
             {
@@ -109,10 +102,8 @@ namespace Times.Controllers
                         TripStartTime = $"{date.ToString("yyyy-MM-dd")}T{timePart.Replace("24:", "00:")}";
                     }
                     var parsedDate = DateTime.Parse(TripStartTime);
-                    var awst_now = TimeZoneInfo.ConvertTime(DateTime.Now,
-                     TimeZoneInfo.FindSystemTimeZoneById("W. Australia Standard Time"));
 
-                    TimeSpan ts = parsedDate - awst_now;
+                    TimeSpan ts = parsedDate - Helpers.NowAWST;
                     return ((int)Math.Floor(ts.TotalMinutes)).ToString();
                 }
                 catch

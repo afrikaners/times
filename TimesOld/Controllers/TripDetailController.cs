@@ -46,7 +46,16 @@ namespace Times.Controllers
             var content = response.Content; // raw content as string
             var data = JsonConvert.DeserializeObject<Trips>(content);
             data.TripStops = data.TripStops.Where(x => x.TransitStop.ParentName != "Elizabeth Quay Stn").ToList();
-            return Ok(data);
+
+            return Ok(new RedactedTripResponse
+            {
+                Stops = data.TripStops.Select(x => new RedactedTripDetails
+                {
+                    ArriveTime = x.ArrivalTimeOnly,
+                    DepartTime = string.IsNullOrEmpty(x.ArrivalTimeOnly) ? x.DepartureTimeOnly : "",
+                    Station = x.TransitStop.ParentName
+                }).ToList()
+            });
         }
 
         public class TransitStop
@@ -93,6 +102,18 @@ namespace Times.Controllers
             public List<TripStop> TripStops { get; set; }
         }
 
+
+        public class RedactedTripDetails
+        {
+            public string Station { get; set; }
+            public string DepartTime { get; set; }
+            public string ArriveTime { get; set; }
+        }
+
+        public class RedactedTripResponse
+        {
+            public List<RedactedTripDetails> Stops { get; set; }
+        }
     }
 
 }

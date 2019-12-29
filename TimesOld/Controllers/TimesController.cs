@@ -35,6 +35,12 @@ namespace Times.Controllers
             {
                 return BadRequest("request is incorrect");
             }
+
+            if(s == "keepalive")
+            {
+                return Ok();
+            }
+
             var client = new RestClient(ConstantValues.BaseUrl);
             
             Enum.TryParse(s, out TripCode station);

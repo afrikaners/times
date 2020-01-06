@@ -15,5 +15,12 @@ namespace TimesOld
             }
         }
 
+        public static DateTime ToAWST(this DateTime date)
+        {
+           return TimeZoneInfo.ConvertTime(date,
+                    TimeZoneInfo.FindSystemTimeZoneById("W. Australia Standard Time"));
+            
+        }
+
     }
 }
